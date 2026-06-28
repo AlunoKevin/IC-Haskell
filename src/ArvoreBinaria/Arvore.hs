@@ -1,6 +1,6 @@
 
 
- 
+module ArvoreBinaria.Arvore(ABB(..),searchABB, insertABB, removeABB, tamABB, hightABB, printABB) where
 
 data ABB a = Vazio 
            | No a (ABB a) (ABB a) 
@@ -43,6 +43,7 @@ removeMin :: ABB a -> (a, ABB a)
 removeMin (No a Vazio dir) = (a, dir)
 removeMin (No a esq dir)   = let (minVal, newEsq) = removeMin esq
                              in (minVal, No a newEsq dir)
+removeMin Vazio = error "removeMin called on an empty tree"
 
 tamABB :: ABB a -> Integer
 tamABB Vazio = 0
@@ -52,5 +53,10 @@ tamABB (No _ esq dir) = 1 + tamABB esq + tamABB dir -- mt ruim a recursao aqui
 
 -- so necessario caucular o maximo entre ambos lados e apos adicionar a raiz remanecente
 hightABB :: ABB a -> Integer
-hightABB Vazio = 0
+hightABB Vazio = -1
 hightABB (No _ esq dir) = 1 + max (hightABB esq) (hightABB dir) -- mt ruim a recursao aqui 
+
+
+printABB :: (Show a) => ABB a -> String
+printABB Vazio = ""
+printABB (No a esq dir) = printABB esq ++ show a ++ "" ++ printABB dir
